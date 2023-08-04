@@ -1,0 +1,112 @@
+[data-theme="dark"] {
+  --frame-background: rgba(0, 0, 0, 0.75);
+  --frame-control-color: hsla(0, 0%, 100%, 0.2);
+  --frame-title-placeholder-color: hsla(0, 0%, 100%, 0.3);
+  --frame-title-color: hsla(0, 0%, 100%, 0.6);
+  --frame-shadow-border: rgba(0, 0, 0, 0.8);
+  --frame-highlight-border: hsla(0, 0%, 100%, 0.3);
+}
+
+.frame {
+  padding: 64px;
+  background-image: linear-gradient(
+    140deg,
+    rgb(165, 142, 251),
+    rgb(233, 191, 248)
+  );
+  position: relative;
+  min-width: 520px;
+  max-width: 920px;
+  transition: padding 0.2s;
+}
+
+.frame-window {
+  border: none;
+  box-shadow: 0 0 0 1px var(--frame-highlight-border),
+    0 0 0 1.5px var(--frame-shadow-border), 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+    0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
+    0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+    0 100px 80px rgba(0, 0, 0, 0.12);
+
+  display: flex;
+  min-height: 120px;
+  flex-direction: column;
+  align-items: stretch;
+  padding-top: 10px;
+  border: 1px solid hsla(0, 0%, 100%, 0.3);
+  border-radius: 10px;
+  background: var(--frame-background);
+  transition: all 0.3s ease;
+}
+
+
+.editor {
+  --editor-padding: 16px 16px 21px 16px;
+  --syntax-text: #ffffff;
+  --syntax-background: rgba 0, 0, 0, 0.75;
+  --syntax-string: #dfd473;
+  --syntax-comment: #807796;
+  --syntax-variable: #73dfa5;
+  --syntax-variable-2: #ffffff;
+  --syntax-variable-3: #e08569;
+  --syntax-number: #7a7ffd;
+  --syntax-atom: #7a7ffd;
+  --syntax-keyword: #ff659c;
+  --syntax-property: #1ac8ff;
+  --syntax-definition: #73dfa5;
+  --syntax-meta: #f1ecfe;
+  --syntax-operator: #ff659c;
+  --syntax-attribute: #73dfa5;
+  --syntax-tag: #ff659c;
+  display: grid;
+  width: 100%;
+  grid-template: 1fr/1fr;
+}
+
+.editor textarea {
+  height: 127px;
+  z-index: 2;
+  border: none;
+  background: transparent;
+  caret-color: var(--syntax-text);
+  resize: none;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-size-adjust: none;
+  -moz-text-size-adjust: none;
+  text-size-adjust: none;
+  padding: var(--editor-padding);
+  margin: 0;
+  font-family: JetBrains Mono, monospace;
+  font-size: 15px;
+  font-variant-ligatures: none;
+  font-weight: 500;
+  grid-column: 1/1;
+  grid-row: 1/1;
+  letter-spacing: 0.1px;
+  line-height: 22.5px;
+  -moz-tab-size: 2;
+  -o-tab-size: 2;
+  tab-size: 2;
+  white-space: pre-wrap;
+}
+
+.editor textarea:focus {
+  outline: none;
+}
+
+.editor div.editor-formatted {
+  padding: var(--editor-padding);
+  margin: 0;
+  font-family: JetBrains Mono, monospace;
+  font-size: 15px;
+  font-variant-ligatures: none;
+  font-weight: 500;
+  grid-column: 1/1;
+  grid-row: 1/1;
+  letter-spacing: 0.1px;
+  line-height: 22.5px;
+  -moz-tab-size: 2;
+  -o-tab-size: 2;
+  tab-size: 2;
+  white-space: pre-wrap;
+}
