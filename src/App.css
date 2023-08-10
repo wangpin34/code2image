@@ -64,7 +64,6 @@
 }
 
 .editor textarea {
-  height: 127px;
   z-index: 2;
   border: none;
   background: transparent;
@@ -88,6 +87,8 @@
   -o-tab-size: 2;
   tab-size: 2;
   white-space: pre-wrap;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 .editor textarea:focus {
