@@ -76,7 +76,7 @@
   padding: var(--editor-padding);
   margin: 0;
   font-family: JetBrains Mono, monospace;
-  font-size: 15px;
+  font-size: var(--editor-font-size);
   font-variant-ligatures: none;
   font-weight: 500;
   grid-column: 1/1;
@@ -99,7 +99,7 @@
   padding: var(--editor-padding);
   margin: 0;
   font-family: JetBrains Mono, monospace;
-  font-size: 15px;
+  font-size: var(--editor-font-size);
   font-variant-ligatures: none;
   font-weight: 500;
   grid-column: 1/1;

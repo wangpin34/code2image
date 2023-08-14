@@ -5,28 +5,42 @@ import 'highlight.js/styles/a11y-dark.css';
 import { useCallback, useEffect, useState } from "react";
 import Actions from './Actions';
 import "./App.css";
+import { Language, SetterProvider, ValueProvider, useFontSize, useLanguage } from './context';
 
-function App() {
+function Frame() {
+  const language = useLanguage()
+  const fontSize = useFontSize()
   const [code, setCode] = useState("");
-  const [formtedCode, setFormtedCode] = useState("");
-
-  const onInput = useCallback((e: React.FormEvent<HTMLTextAreaElement>) => {
+  const [formattedCode, setFormattedCode] = useState("")
+    const onInput = useCallback((e: React.FormEvent<HTMLTextAreaElement>) => {
     const ta = e.target as HTMLTextAreaElement
     ta.style.height = ta.scrollHeight + 'px'
   }, [])
+
+  // useEffect(() => {
+  //   hljs.registerLanguage(language, require(`highlight.js/lib/languages/${language}`));
+  // }, [language])
   
   useEffect(() => {
-    const html = hljs.highlight(code, {language: 'javascript'}).value
-    setFormtedCode(html);
-  }, [code])
+    console.log(`language`, language)
+    if (!(code && code.trim())) return
+    let html: string
+    if (language) {
+      html = hljs.highlight(code, { language: language}).value
+    } else {
+      html = hljs.highlightAuto(code).value
 
+    }
+    setFormattedCode(html);
+    
+  }, [code, language])
 
+  const editorStyle = { '--editor-font-size': fontSize + 'px'}
 
-  return (
-    <Theme appearance='dark'>
-    <div className="frame" data-theme="dark">
+ return (
+      <div className="frame" data-theme="dark">
       <div className="frame-window">
-        <div className="editor">
+        <div className="editor" style={editorStyle as React.CSSProperties}>
           <textarea
             value={code}
             tabIndex={-1}
@@ -39,12 +53,28 @@ function App() {
           />
           <div
             className="editor-formatted hljs"
-            dangerouslySetInnerHTML={{ __html: formtedCode }}
+            dangerouslySetInnerHTML={{ __html: formattedCode }}
           ></div>
         </div>
       </div>
     </div>
+ )
+}
+
+function App() {
+  const [language, setLanguage] = useState<Language>()
+  const [fontSize, setFontSize] = useState<number>(15)
+
+  return (
+    <Theme appearance='dark'>
+      <SetterProvider value={{setLanguage, setFontSize}}>
+        <ValueProvider value={{language, fontSize}}>
+          <>
+     <Frame />
      <Actions />
+     </>
+     </ValueProvider>
+     </SetterProvider>
     </Theme>
   );
 }

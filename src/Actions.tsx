@@ -1,6 +1,7 @@
-import { Button, DropdownMenu } from '@radix-ui/themes';
+import { Button, DropdownMenu, Select } from '@radix-ui/themes';
 import * as htmlToImage from 'html-to-image';
 import { nanoid } from 'nanoid';
+import { Language, useFontSize, useLanguage, useSetFontSize, useSetLanuage } from './context';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
 
@@ -67,7 +68,37 @@ function CopyImage() {
  
 }
 
-export default function Actions() {
+const availableLanguages: Language[] = [
+  'javascript',
+  'typescript',
+  'css',
+  'sass',
+  'scss',
+  'less',
+  'python',
+  'java',
+  'ruby',
+  'go',
+]
+
+function SelectLanguage() {
+  const language = useLanguage()
+  const setLanguage = useSetLanuage()
+  return (<Select.Root value={language} onValueChange={(e) => setLanguage(e ? e as Language : undefined)}>
+  <Select.Trigger placeholder="Select a language" />
+  <Select.Content>
+    <Select.Item value="">Auto</Select.Item>
+    {availableLanguages.map((language) => (
+      <Select.Item key={language} value={language}>
+        {language}
+        </Select.Item>
+    ))}
+  
+  </Select.Content>
+</Select.Root>)
+}
+
+ function Export() {
   return (<DropdownMenu.Root>
   <DropdownMenu.Trigger>
     <Button variant="soft">
@@ -82,4 +113,27 @@ export default function Actions() {
     <DropdownMenu.Item>Copy URL</DropdownMenu.Item>
   </DropdownMenu.Content>
 </DropdownMenu.Root>)
+}
+
+export function SelectFontSize() {
+  const fontSize = useFontSize()
+  const setFontSize = useSetFontSize()
+  return <Select.Root value={fontSize + ''} onValueChange={(e) => setFontSize(parseInt(e))}>
+    <Select.Trigger placeholder="Select a font size" />
+    <Select.Content>
+      <Select.Item value="12">12</Select.Item>
+      <Select.Item value="15">15</Select.Item>
+      <Select.Item value="18">18</Select.Item>
+      <Select.Item value="20">20</Select.Item>
+      </Select.Content>
+  </Select.Root>
+}
+
+export default function Actions() {
+
+  return <>
+  <SelectLanguage />
+  <SelectFontSize />
+  <Export />
+  </>
 }
