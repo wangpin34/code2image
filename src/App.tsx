@@ -61,18 +61,35 @@ function Frame() {
  )
 }
 
-function App() {
+function App({initEnabled}: {initEnabled?: boolean}) {
+  const [enabled, setEnabled] = useState(initEnabled)
   const [language, setLanguage] = useState<Language>()
   const [fontSize, setFontSize] = useState<number>(15)
+
+  useEffect(() => {
+    if (import.meta.env.PROD) {
+       chrome.runtime.onMessage.addListener(function (request, _ /*sender*/, sendResponse) {
+      console.log(`got resquest type=${request.type}`)
+      if (request.type === 'enable') {
+        sendResponse({
+          received: true,
+        })
+        setEnabled(true)
+        chrome.runtime.sendMessage({ type: 'enabled' })
+      }
+    })
+    }
+   
+  }, [])
 
   return (
     <Theme appearance='dark'>
       <SetterProvider value={{setLanguage, setFontSize}}>
         <ValueProvider value={{language, fontSize}}>
-          <>
-     <Frame />
-     <Actions />
-     </>
+          {enabled ? <div>
+            <Frame />
+            <Actions />
+          </div> : null }
      </ValueProvider>
      </SetterProvider>
     </Theme>
