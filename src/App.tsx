@@ -63,13 +63,14 @@ function Frame() {
 
 
 
-function App() {
-  const [show, setShow] = useState(false)
+function App({initShow}: {initShow?: boolean}) {
+  const [show, setShow] = useState(initShow)
   const [language, setLanguage] = useState<Language>()
   const [fontSize, setFontSize] = useState<number>(15)
 
   useEffect(() => {
-    chrome.runtime.onMessage.addListener(function (request, _ /*sender*/, sendResponse) {
+    if (import.meta.env.PROD) {
+      chrome.runtime.onMessage.addListener(function (request, _ /*sender*/, sendResponse) {
       console.log(`got resquest type=${request.type}`)
       if (request.type === 'switch') {
         sendResponse({
@@ -83,11 +84,13 @@ function App() {
         
       }
     })
+    }
+    
   }, [])
 
 
   return (
-    <Theme appearance='dark'>
+    <Theme appearance="dark">
       <SetterProvider value={{setLanguage, setFontSize}}>
         <ValueProvider value={{language, fontSize}}>
           { show ? <>
