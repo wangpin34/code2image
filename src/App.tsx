@@ -22,7 +22,6 @@ function Frame() {
   // }, [language])
   
   useEffect(() => {
-    console.log(`language`, language)
     if (!(code && code.trim())) return
     let html: string
     if (language) {
@@ -61,35 +60,40 @@ function Frame() {
  )
 }
 
-function App({initEnabled}: {initEnabled?: boolean}) {
-  const [enabled, setEnabled] = useState(initEnabled)
+
+
+
+function App() {
+  const [show, setShow] = useState(false)
   const [language, setLanguage] = useState<Language>()
   const [fontSize, setFontSize] = useState<number>(15)
 
   useEffect(() => {
-    if (import.meta.env.PROD) {
-       chrome.runtime.onMessage.addListener(function (request, _ /*sender*/, sendResponse) {
+    chrome.runtime.onMessage.addListener(function (request, _ /*sender*/, sendResponse) {
       console.log(`got resquest type=${request.type}`)
-      if (request.type === 'enable') {
+      if (request.type === 'switch') {
         sendResponse({
           received: true,
         })
-        setEnabled(true)
-        chrome.runtime.sendMessage({ type: 'enabled' })
+        setShow(v => {
+          const next = !v
+          chrome.runtime.sendMessage({ type: next ? 'show' : 'hidden' })
+          return next
+        })
+        
       }
     })
-    }
-   
   }, [])
+
 
   return (
     <Theme appearance='dark'>
       <SetterProvider value={{setLanguage, setFontSize}}>
         <ValueProvider value={{language, fontSize}}>
-          {enabled ? <div>
+          { show ? <>
             <Frame />
             <Actions />
-          </div> : null }
+          </> : null }
      </ValueProvider>
      </SetterProvider>
     </Theme>
