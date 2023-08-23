@@ -110,7 +110,6 @@ function SelectLanguage() {
     <DropdownMenu.Item onClick={SaveSVG}>Save SVG</DropdownMenu.Item>
     <DropdownMenu.Separator />
     <DropdownMenu.Item onClick={CopyImage}>Copy Image</DropdownMenu.Item>
-    <DropdownMenu.Item>Copy URL</DropdownMenu.Item>
   </DropdownMenu.Content>
 </DropdownMenu.Root>)
 }
