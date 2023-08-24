@@ -16,7 +16,7 @@ function App({initShow}: {initShow?: boolean}) {
   useEffect(() => {
     if (import.meta.env.PROD) {
       chrome.runtime.onMessage.addListener(function (request, _ /*sender*/, sendResponse) {
-      console.log(`got resquest type=${request.type}`)
+      console.log(`got request type=${request.type}`)
       if (request.type === 'switch') {
         sendResponse({
           received: true,
@@ -38,7 +38,7 @@ function App({initShow}: {initShow?: boolean}) {
       <Theme accentColor='violet' grayColor='gray'  appearance='dark'>
         <SetterProvider value={{setLanguage, setFontSize}}>
           <ValueProvider value={{language, fontSize}}>
-            { show ? <div id="code-glam-app" className="p-4 dark w-fit shadow-2xl rounded-md">
+            { show ? <div id="code-glam-app" className="p-4 dark w-fit shadow-2xl rounded-md fixed top-8 right-8">
               <Frame />
               <Actions />
             </div> : <></> }
