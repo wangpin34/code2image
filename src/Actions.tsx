@@ -2,8 +2,6 @@ import { Button, DropdownMenu, Select } from '@radix-ui/themes';
 import * as htmlToImage from 'html-to-image';
 import { nanoid } from 'nanoid';
 import { Language, useFontSize, useLanguage, useSetFontSize, useSetLanuage } from './context';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-//@ts-ignore
 
 function getFrame() {
   return document.querySelector('.frame') as HTMLElement
@@ -101,15 +99,15 @@ function SelectLanguage() {
  function Export() {
   return (<DropdownMenu.Root>
   <DropdownMenu.Trigger>
-    <Button variant="soft">
+    <Button variant="solid" aria-label="Export as">
       Export
     </Button>
   </DropdownMenu.Trigger>
-  <DropdownMenu.Content>
-    <DropdownMenu.Item onClick={SavePNG}>Save PNG</DropdownMenu.Item>
-    <DropdownMenu.Item onClick={SaveSVG}>Save SVG</DropdownMenu.Item>
-    <DropdownMenu.Separator />
-    <DropdownMenu.Item onClick={CopyImage}>Copy Image</DropdownMenu.Item>
+  <DropdownMenu.Content className="DropdownMenuContent" sideOffset={5}>
+    <DropdownMenu.Item className="DropdownMenuItem" onClick={SavePNG}>Save PNG</DropdownMenu.Item>
+    <DropdownMenu.Item  className="DropdownMenuItem" onClick={SaveSVG}>Save SVG</DropdownMenu.Item>
+    <DropdownMenu.Separator className="DropdownMenuSeparator"/>
+    <DropdownMenu.Item className="DropdownMenuItem" onClick={CopyImage}>Copy Image</DropdownMenu.Item>
   </DropdownMenu.Content>
 </DropdownMenu.Root>)
 }
@@ -130,9 +128,9 @@ export function SelectFontSize() {
 
 export default function Actions() {
 
-  return <>
-  <SelectLanguage />
-  <SelectFontSize />
-  <Export />
-  </>
+  return <div className="actions mt-4 px-4 py-2.5 rounded-md border-2 border-solid border-gray-800 grid grid-cols-3 gap-x-8">
+    <SelectLanguage />
+    <SelectFontSize />
+    <Export />
+  </div>
 }
