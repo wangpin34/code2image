@@ -35,7 +35,7 @@
       "matches": ["*://*/*"]
     }
   ],
-  "permissions": ["activeTab", "background"],
+  "permissions": ["activeTab", "background", "clipboardWrite"],
   "content_security_policy": {
     "script-src": "localhost",
     "object-src": "none"
